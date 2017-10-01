@@ -24,7 +24,7 @@ namespace barmag
         static void PerformWinBuild()
         {
             string target_dir = APP_NAME + ".exe";
-            GenericBuild(SCENES, TARGET_DIR + "/win/" + target_dir, BuildTarget.StandaloneWindows, BuildOptions.None);
+            GenericBuild(SCENES, TARGET_DIR + "/win/" + target_dir, BuildTarget.StandaloneWindows64, BuildOptions.None);
         }
 
         private static string[] FindEnabledEditorScenes()
