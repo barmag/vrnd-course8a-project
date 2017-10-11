@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallBehavior : MonoBehaviour {
+public class BallReset : MonoBehaviour {
 
     public Transform BallResetPosition;
     public GameObject Floor;
