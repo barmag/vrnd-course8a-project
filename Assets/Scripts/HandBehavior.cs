@@ -16,7 +16,7 @@ public class HandBehavior : MonoBehaviour {
     public float distance;
     public bool hasSwipedLeft;
     public bool hasSwipedRight;
-    //public ObjectMenuManager objectMenuManager;
+    public ObjectMenuManager objectMenuManager;
 
     // Use this for initialization
     void Start () {
@@ -67,15 +67,18 @@ public class HandBehavior : MonoBehaviour {
     private void SwipeLeft()
     {
         Debug.Log("Swiped Left!");
+        objectMenuManager.MenuLeft();
     }
 
     private void SwipeRight()
     {
         Debug.Log("Swiped Right!");
+        objectMenuManager.MenuRight();
     }
 
     private void OnTriggerStay(Collider collider)
     {
+        return;         //Using SteamVR Interaction System to throw objects
         if (collider.CompareTag("Throwable"))   //Interact with throwable objects
         {
             if (device.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
