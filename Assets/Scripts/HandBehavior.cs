@@ -62,6 +62,17 @@ public class HandBehavior : MonoBehaviour {
             hasSwipedLeft = false;
             hasSwipedRight = false;
         }
+
+        if (device.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
+        {
+            //Spawn object currently selected by menu
+            SpawnObject();
+        }
+    }
+
+    private void SpawnObject()
+    {
+        objectMenuManager.SpawnCurrentObject();
     }
 
     private void SwipeLeft()

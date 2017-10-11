@@ -6,6 +6,7 @@ public class ObjectMenuManager : MonoBehaviour {
 
     public List<GameObject> objectList;
     public List<GameObject> objectPrefabList;
+    public GameObject controller;
 
     public int currentObject = 0;
 
@@ -30,5 +31,17 @@ public class ObjectMenuManager : MonoBehaviour {
         objectList[currentObject].SetActive(false);
         currentObject = currentObject == objectList.Count - 1 ? 0 : currentObject + 1;
         objectList[currentObject].SetActive(true);
+    }
+
+    public void SpawnCurrentObject()
+    {
+        //Instantiate(objectPrefabList[currentObject],
+        //    objectList[currentObject].transform.position,
+        //    objectList[currentObject].transform.rotation);
+        Vector3 controllerPosition = controller.transform.position;
+        float spawnDistance = .1f; // to prevent the prefab from spawning right in front of our face
+        var instance = Instantiate(objectPrefabList[currentObject], new Vector3(controllerPosition.x, controllerPosition.y, controllerPosition.z + spawnDistance), objectPrefabList[currentObject].transform.rotation);
+        Debug.Log(string.Format("spawn position: {0}", instance.transform.position));
+
     }
 }
