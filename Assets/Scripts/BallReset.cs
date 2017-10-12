@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class BallReset : MonoBehaviour {
 
     public Transform BallResetPosition;
     public GameObject Floor;
+    public GameObject ObjectivesRoot;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +24,20 @@ public class BallReset : MonoBehaviour {
         if (collision.gameObject == Floor)
         {
             resetBallPosition();
+            resetCollectibles();
+        }
+    }
+
+    private void resetCollectibles()
+    {
+        foreach (Transform t in ObjectivesRoot.transform)
+        {
+            var c = t.gameObject.GetComponent<Collectible>();
+            if (c != null)
+            {
+                c.RestCollectible();
+            }
+
         }
     }
 
