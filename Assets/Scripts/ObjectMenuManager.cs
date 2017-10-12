@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class ObjectMenuManager : MonoBehaviour {
     public List<GameObject> objectList;
     public List<GameObject> objectPrefabList;
     public GameObject controller;
+    public GameObject menu;
 
     public int currentObject = 0;
 
@@ -43,5 +45,15 @@ public class ObjectMenuManager : MonoBehaviour {
         var instance = Instantiate(objectPrefabList[currentObject], new Vector3(controllerPosition.x, controllerPosition.y, controllerPosition.z + spawnDistance), objectPrefabList[currentObject].transform.rotation);
         Debug.Log(string.Format("spawn position: {0}", instance.transform.position));
 
+    }
+
+    internal void HideMenu()
+    {
+        menu.SetActive(false);
+    }
+
+    internal void ShowMenu()
+    {
+        menu.SetActive(true);
     }
 }

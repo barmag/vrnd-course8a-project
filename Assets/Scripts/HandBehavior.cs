@@ -7,6 +7,7 @@ public class HandBehavior : MonoBehaviour {
 
     public SteamVR_TrackedObject trackedObj;
     private SteamVR_Controller.Device device;
+    private bool isObjectMenuVisible;
     public float throwForce = 1.5f;
 
     //Swipe
@@ -17,6 +18,13 @@ public class HandBehavior : MonoBehaviour {
     public bool hasSwipedLeft;
     public bool hasSwipedRight;
     public ObjectMenuManager objectMenuManager;
+    public float rightOffset = 0.7f;
+    public float leftOffset = -0.7f;
+
+    private void Awake()
+    {
+        objectMenuManager.HideMenu();
+    }
 
     // Use this for initialization
     void Start () {
@@ -27,33 +35,34 @@ public class HandBehavior : MonoBehaviour {
 	void Update () {
         device = SteamVR_Controller.Input((int)trackedObj.index);
 
-        if (device.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
-        {
-            touchCurrent = device.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).x;
-            distance = touchCurrent - touchLast;
-            touchLast = touchCurrent;
-            swipeSum += distance;
-            if (!hasSwipedRight)
-            {
-                if (swipeSum > 0.5f)
-                {
-                    swipeSum = 0;
-                    SwipeRight();
-                    hasSwipedRight = true;
-                    hasSwipedLeft = false;
-                }
-            }
-            if (!hasSwipedLeft)
-            {
-                if (swipeSum < 0.5f)
-                {
-                    swipeSum = 0;
-                    SwipeLeft();
-                    hasSwipedLeft = true;
-                    hasSwipedRight = false;
-                }
-            }
-        }
+        //if (device.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
+        //{
+        //    touchCurrent = device.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).x;
+        //    distance = touchCurrent - touchLast;
+        //    touchLast = touchCurrent;
+        //    swipeSum += distance;
+        //    if (!hasSwipedRight)
+        //    {
+        //        if (swipeSum > 0.5f)
+        //        {
+        //            swipeSum = 0;
+        //            SwipeRight();
+        //            hasSwipedRight = true;
+        //            hasSwipedLeft = false;
+        //        }
+        //    }
+        //    if (!hasSwipedLeft)
+        //    {
+        //        if (swipeSum < 0.5f)
+        //        {
+        //            swipeSum = 0;
+        //            SwipeLeft();
+        //            hasSwipedLeft = true;
+        //            hasSwipedRight = false;
+        //        }
+        //    }
+        //}
+
         if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Touchpad))
         {
             swipeSum = 0;
@@ -61,12 +70,34 @@ public class HandBehavior : MonoBehaviour {
             touchLast = 0;
             hasSwipedLeft = false;
             hasSwipedRight = false;
+            isObjectMenuVisible = false;
+            objectMenuManager.HideMenu();
         }
 
-        if (device.GetPressDown(SteamVR_Controller.ButtonMask.Grip))
+        if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Touchpad))
+        {
+            isObjectMenuVisible = true;
+            objectMenuManager.ShowMenu();
+        }
+
+        if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger) && isObjectMenuVisible)
         {
             //Spawn object currently selected by menu
             SpawnObject();
+        }
+
+        if (device.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
+        {
+            touchCurrent = device.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).x;
+            if (touchCurrent > rightOffset)
+            {
+                objectMenuManager.MenuRight();
+            }
+
+            if (touchCurrent < leftOffset)
+            {
+                objectMenuManager.MenuLeft();
+            }
         }
     }
 
