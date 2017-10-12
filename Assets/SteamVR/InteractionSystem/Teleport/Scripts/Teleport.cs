@@ -7,12 +7,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Valve.VR.InteractionSystem
 {
 	//-------------------------------------------------------------------------
 	public class Teleport : MonoBehaviour
 	{
+        public List<Hand> hands;
 		public LayerMask traceLayerMask;
 		public LayerMask floorFixupTraceLayerMask;
 		public float floorFixupMaximumTraceDistance = 1.0f;
@@ -234,7 +236,7 @@ namespace Valve.VR.InteractionSystem
 			Hand oldPointerHand = pointerHand;
 			Hand newPointerHand = null;
 
-			foreach ( Hand hand in player.hands )
+			foreach ( Hand hand in hands )
 			{
 				if ( visible )
 				{
