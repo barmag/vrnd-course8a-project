@@ -39,7 +39,7 @@ public class ObjectMenuManager : MonoBehaviour {
         //    objectList[currentObject].transform.position,
         //    objectList[currentObject].transform.rotation);
         Vector3 controllerPosition = controller.transform.position;
-        float spawnDistance = .1f; // to prevent the prefab from spawning right in front of our face
+        float spawnDistance = .3f; // to prevent the prefab from spawning right in front of our face
         var instance = Instantiate(objectPrefabList[currentObject], new Vector3(controllerPosition.x, controllerPosition.y, controllerPosition.z + spawnDistance), objectPrefabList[currentObject].transform.rotation);
         Debug.Log(string.Format("spawn position: {0}", instance.transform.position));
 
