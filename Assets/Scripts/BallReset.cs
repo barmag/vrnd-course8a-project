@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Valve.VR.InteractionSystem;
 
 public class BallReset : MonoBehaviour {
 
@@ -9,13 +10,33 @@ public class BallReset : MonoBehaviour {
     public GameObject Floor;
     public GameObject ObjectivesRoot;
 
+    public Material disabledMaterial;
+    public Material enabledMaterial;
+
 	// Use this for initialization
 	void Start () {
         resetBallPosition();
+        Valve.VR.InteractionSystem.Teleport.Player.AddListener(playerTeleported);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void playerTeleported(TeleportMarkerBase marker)
+    {
+        if (marker.CompareTag("Platform"))
+        {
+            Debug.Log("teleported to platform, enable ball");
+            gameObject.GetComponent<Renderer>().material = enabledMaterial;
+            gameObject.tag = "Throwable";
+        }
+        else
+        {
+            Debug.Log("teleported out, disable ball");
+            gameObject.GetComponent<Renderer>().material = disabledMaterial;
+            gameObject.tag = "disabled_ball";
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
