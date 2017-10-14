@@ -17,6 +17,8 @@ public class BallReset : MonoBehaviour {
 	void Start () {
         resetBallPosition();
         Valve.VR.InteractionSystem.Teleport.Player.AddListener(playerTeleported);
+        gameObject.GetComponent<Renderer>().material = enabledMaterial;
+        gameObject.tag = "Throwable";
     }
 
     private void playerTeleported(TeleportMarkerBase marker)

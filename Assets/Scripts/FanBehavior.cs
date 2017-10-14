@@ -16,13 +16,17 @@ public class FanBehavior : MonoBehaviour {
 		
 	}
 
-    private void OnTriggerStay(Collider collider)
+    private void OnCollisionEnter(Collision collision)
     {
+        
         Debug.Log("Fan Hit!");
 
-        if (collider.CompareTag("Throwable"))
+        if (collision.gameObject.CompareTag("Throwable"))
         {
-            collider.gameObject.GetComponent<Rigidbody>().AddForce(-transform.forward * force, ForceMode.Acceleration);
+            var dir = collision.contacts[0].point - transform.position;
+            var fanForce = -dir.normalized * force;
+            Debug.Log(string.Format("fan force {0}", fanForce));
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(fanForce, ForceMode.VelocityChange);
         }
     }
 }

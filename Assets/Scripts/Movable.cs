@@ -84,7 +84,7 @@ public class Movable : MonoBehaviour {
 
     private void HandAttachedUpdate(Hand hand)
     {
-        Debug.Log("Attach update!");
+        //Debug.Log("Attach update!");
         //Trigger got released
         if (!hand.GetStandardInteractionButton())
         {
